@@ -106,7 +106,7 @@ AFRAME.registerComponent("interactive-book", {
                 self.createBookPage(2);
                 self.createBookPage(3);
                 // initialize book positions
-                self.flip("close");
+                self.flip("open");
             } 
         );
  
@@ -140,6 +140,11 @@ AFRAME.registerComponent("interactive-book", {
         this.enabledLight.setAttribute("material", { color: "#444444", emissive: "#BB0000" });
         this.enabledLight.setAttribute("position", {x: 0, y:this.data.bookHeight/2 + margin, z:0} );
         this.spine.appendChild(this.enabledLight);
+
+        document.addEventListener('keyup', (e) => {
+            if (e.code === "ArrowUp")        this.flip("left");
+            else if (e.code === "ArrowDown") this.flip("right");
+        });
     },
 
     // create a "book page" object: a box with two planes attached, 
@@ -391,19 +396,19 @@ AFRAME.registerComponent("interactive-book", {
         }
 
         // user can only interact with book if it is enabled
-        if ( !this.enabled )
-            return;
+        // if ( !this.enabled )
+        //     return;
 
-        if (this.controllerData.buttonA.pressed ||
-            this.controllerData.buttonX.pressed ||
-            this.controllerData.leftAxisX  < -0.90 ||
-            this.controllerData.rightAxisX < -0.90 )
-            this.flip("left");
+        // if (this.controllerData.buttonA.pressed ||
+        //     this.controllerData.buttonX.pressed ||
+        //     this.controllerData.leftAxisX  < -0.90 ||
+        //     this.controllerData.rightAxisX < -0.90 )
+        //     this.flip("left");
 
-        if (this.controllerData.buttonB.pressed ||
-            this.controllerData.buttonY.pressed ||
-            this.controllerData.leftAxisX  > 0.90 ||
-            this.controllerData.rightAxisX > 0.90 )
-            this.flip("right");
+        // if (this.controllerData.buttonB.pressed ||
+        //     this.controllerData.buttonY.pressed ||
+        //     this.controllerData.leftAxisX  > 0.90 ||
+        //     this.controllerData.rightAxisX > 0.90 )
+        //     this.flip("right");
     }
 });
